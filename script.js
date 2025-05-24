@@ -69,7 +69,7 @@ filter.addEventListener("change", (e) => {
 toSearch.addEventListener("input", (e) => {
   const key = e.target.value;
   const filtered = allCountries.filter((c) =>
-    c.name.common.toLowerCase().includes(key)
+    c.name.common.toLowerCase().includes(key.toLowerCase())
   );
   displayCountries(filtered);
 });
