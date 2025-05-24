@@ -1,4 +1,9 @@
 const box = document.querySelector(".content-box");
+const filter = document.querySelector("#filter-r");
+
+const toSearch = document.querySelector("#search");
+
+let allCountries = [];
 
 const url =
   "https://restcountries.com/v3.1/all?fields=population,region,capital,flags,name";
@@ -6,18 +11,26 @@ const url =
 async function getData() {
   try {
     const response = await fetch(url);
-    const countries = await response.json();
+    allCountries = await response.json();
 
-    let html = "";
-    countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
-    //countries.sort((a, b) =>  b.population - a.population); sort by decreasing of population
-    countries.forEach((country) => {
-      html += `
-        <div class="details bg-white flex flex-col w-[250px] h-[max-content] overflow-clip rounded-lg m-4 shadow-xl">
+    //allCountries.sort((a, b) => a.name.common.localeCompare(b.name.common));
+
+    filterCountries(allCountries);
+    displayCountries(allCountries);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+function displayCountries(data) {
+  let html = "";
+  data.forEach((country) => {
+    html += `
+        <div class="details bg-white flex flex-col w-[250px] h-[max-content] overflow-clip hover:cursor-pointer rounded-lg m-4 shadow-xl">
           <div class="img w-full h-[150px]">
             <img src="${country.flags.png}" alt="${
-        country.name.common
-      } Flag" class="w-full h-full object-cover" />
+      country.name.common
+    } Flag"class="w-full  h-full object-cover" />
           </div>
 
           <div class="data m-4">
@@ -30,12 +43,35 @@ async function getData() {
           </div>
         </div>
       `;
-    });
-
-    box.innerHTML = html;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
+  });
+  box.innerHTML = html;
 }
+
+function filterCountries(data) {
+  const regions = [...new Set(data.map((c) => c.region).filter(Boolean))];
+  regions.sort();
+
+  let optionsHTML = `<option selected disabled>Select an option</option>`;
+
+  regions.forEach((region) => {
+    optionsHTML += `<option value="${region}">${region}</option>`;
+  });
+
+  filter.innerHTML = optionsHTML;
+}
+
+filter.addEventListener("change", (e) => {
+  const selectedRegion = e.target.value;
+  const filtered = allCountries.filter((c) => c.region === selectedRegion);
+  displayCountries(filtered);
+});
+
+toSearch.addEventListener("input", (e) => {
+  const key = e.target.value;
+  const filtered = allCountries.filter((c) =>
+    c.name.common.toLowerCase().includes(key)
+  );
+  displayCountries(filtered);
+});
 
 getData();
