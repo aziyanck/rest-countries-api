@@ -1,12 +1,23 @@
 const box = document.querySelector(".content-box");
 const filter = document.querySelector("#filter-r");
-
 const toSearch = document.querySelector("#search");
+
+const darkBtn = document.getElementById("darkModeToggle");
+const body = document.body;
 
 let allCountries = [];
 
 const url =
   "https://restcountries.com/v3.1/all?fields=population,region,capital,flags,name";
+
+window.onload = () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    body.classList.toggle("dark");
+    toSearch.classList.toggle("dark");
+    filter.classList.toggle("dark");
+  }
+};
 
 async function getData() {
   try {
@@ -26,7 +37,7 @@ function displayCountries(data) {
   let html = "";
   data.forEach((country) => {
     html += `
-        <div class="details bg-white flex flex-col w-[250px] h-[max-content] overflow-clip hover:cursor-pointer rounded-lg m-4 shadow-xl">
+        <div class="details  flex flex-col w-[250px] h-[max-content] overflow-clip hover:cursor-pointer hover:scale-105 rounded-lg m-4 shadow-xl ">
           <div class="img w-full h-[150px]">
             <img src="${country.flags.png}" alt="${
       country.name.common
@@ -72,6 +83,17 @@ toSearch.addEventListener("input", (e) => {
     c.name.common.toLowerCase().includes(key.toLowerCase())
   );
   displayCountries(filtered);
+});
+
+darkBtn.addEventListener("click", () => {
+  body.classList.toggle("dark");
+  toSearch.classList.toggle("dark");
+  filter.classList.toggle("dark");
+
+  const isDark = document.body.classList.contains("dark");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+
+  console.log("Dark mode toggled");
 });
 
 getData();

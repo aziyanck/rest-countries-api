@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="output.css">
 </head>
 
-<body class="h-[100vh] bg-gray-100">
-    <section class="nav h-[10vh] h-max-[50px] bg-amber-300 flex justify-between items-center p-4 font-extrabold shadow-xl ">
+<body class="h-[100vh] bg-gray-100 dark:bg-gray-800 dark:text-white ">
+    <section class="nav h-[10vh] h-max-[100px]  flex justify-between items-center p-4 font-extrabold shadow-xl ">
         <h1>Where in the world?</h1>
-        <button class="font-medium border-2 m-4 rounded-md px-2 cursor-pointer"><i class="fa-solid fa-moon"></i> Dark
+        <button class="font-medium border-2 m-4 rounded-md px-2 cursor-pointer" id="darkModeToggle"><i class="fa-solid fa-moon"></i> Dark
             Mode</button>
     </section>
 
@@ -25,16 +25,16 @@
                     <i class="fa-brands fa-searchengin"></i>
                 </span>
                 <input type="text" placeholder="Enter a country name" id="search"
-                    class="pl-10 pr-4 py-2 border border-gray-300 rounded-md w-full focus:outline-none bg-white focus:shadow" />
+                    class="pl-10 pr-4 py-2 border dark:bg-gray-800 border-gray-300 rounded-md w-full focus:outline-none bg-white focus:shadow" />
             </div>
             <div class="filter m-4 mt-8">
                 <select name="Region-Filter" id="filter-r"
-                    class="border border-gray-300 rounded-lg px-4 py-2 w-full bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="border border-gray-300 rounded-lg px-4 py-2 w-full dark:bg-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option selected disabled>Select an option</option>
                 </select>
             </div>
         </div>
-        <div class="content-box h-full flex flex-wrap justify-evenly">
+        <div class="content-box h-full flex flex-wrap justify-evenly dark:[&>div]:shadow-gray-700">
             <!-- example div
             <div
                 class="details bg-white flex flex-col w-[250px] h-[max-content] overflow-clip rounded-lg m-4 shadow-xl">
